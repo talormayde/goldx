@@ -6,24 +6,6 @@
 <title>GOLDX — The Digital Gold Mine</title>
 <meta name="description" content="Scarcity. Stability. Community. GOLDX revives gold’s legacy for the digital era.">
 
-<!-- Security meta (supplements real headers) -->
-<meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-<meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=()">
-<!-- Note: real CSP should be sent as an HTTP header; meta helps but isn't full coverage -->
-<meta http-equiv="Content-Security-Policy" content="
-  default-src 'self';
-  base-uri 'self';
-  img-src 'self' data: https:;
-  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-  font-src 'self' https://fonts.gstatic.com;
-  frame-src https://dexscreener.com;
-  script-src 'self';
-  connect-src 'self';
-  frame-ancestors 'self';
-  upgrade-insecure-requests
-">
-
 <!-- Site font: Iceland (entire page) -->
 <link href="https://fonts.googleapis.com/css2?family=Iceland&display=swap" rel="stylesheet">
 
@@ -37,11 +19,15 @@
 
     --max: 760px;
 
-    /* Brand gradients (you can change X/TG here as desired) */
+    /* Brand gradients */
     --jup-1:#00E59B; --jup-2:#00FFA3;            /* Jupiter */
     --moon-1:#B14EFF; --moon-2:#FF6EC7;          /* Moonshot */
 
-    /* Dex button */
+    /* Button gradients (moved from invalid selectors to variables) */
+    --x-grad:  linear-gradient(180deg, #F4C558, #2b2b2b, #000000);     /* X button */
+    --tg-grad: linear-gradient(180deg, #29B6F6, #3A7BFF, #001F54);     /* Telegram button */
+
+    /* DexScreener button */
     --dex-from:#D9D9D9; --dex-to:#8C8C8C;
   }
 
@@ -63,8 +49,8 @@
 
   *{ box-sizing:border-box; margin:0; padding:0 }
   body{
-    font-family: 'Iceland', sans-serif;
-    font-size:18px;
+    font-family: 'Iceland', sans-serif;   /* apply Iceland everywhere */
+    font-size:18px;                       /* body text = 18px */
     line-height:1.6;
     display:block;
     padding:24px 20px 64px;
@@ -78,6 +64,7 @@
       radial-gradient(80% 80% at 0% 50%, rgba(244,197,88,.30), transparent 60%),
       linear-gradient(90deg, rgba(244,197,88,.24), rgba(244,197,88,.08) 45%, transparent 100%);
     filter: blur(18px) saturate(1.05);
+    /* make sure the blur never creates scrollbars */
     will-change: transform;
   }
 
@@ -86,7 +73,8 @@
 
   header{ padding-top:6px; padding-bottom:18px; padding-right:18px }
   .logo{
-    height:300px; width:auto; vertical-align:middle;
+    height:300px; /* bigger logo as you set */
+    width:auto; vertical-align:middle;
   }
 
   h1{
@@ -99,7 +87,7 @@
 
   .row{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; margin-top:18px; }
 
-  /* Small buttons (you already had these) */
+  /* Small buttons with soft opacity and brand gradients */
   .btn{
     display:inline-flex; align-items:center; justify-content:center;
     gap:8px; padding:6px 10px; border-radius:8px;
@@ -111,42 +99,29 @@
   .btn:hover{ opacity:1; transform:translateY(-1px) }
 
   .btn-outline{ border-color: currentColor; background:transparent; color:inherit; }
-
-  /* You’re customizing X/TG in your CSS; leaving class hooks here */
-  .btn-x{    /* set your custom gradient in your CSS variables or directly here */ }
-  .btn-tg{   /* set your custom gradient in your CSS variables or directly here */ }
-
-  .btn-dex{  background: linear-gradient(180deg, var(--dex-from),var(--dex-to)); color:#121212; border-color: rgba(160,160,160,.35); }
-  .btn-jup{  background: linear-gradient(180deg, var(--jup-2),  var(--jup-1));  color:#042018;  border-color: rgba(0,229,155,.35); }
-  .btn-moon{ background: linear-gradient(180deg, var(--moon-1), var(--moon-2)); color:#210425;  border-color: rgba(177,78,255,.35); }
+  .btn-x  { background: var(--x-grad);  color:#fff; }
+  .btn-tg { background: var(--tg-grad); color:#E0F7FA; }
+  .btn-dex{ background: linear-gradient(180deg, var(--dex-from),var(--dex-to)); color:#121212; border-color: rgba(160,160,160,.35); }
+  .btn-jup{ background: linear-gradient(180deg, var(--jup-2),  var(--jup-1));  color:#042018;  border-color: rgba(0,229,155,.35); }
+  .btn-moon{background: linear-gradient(180deg, var(--moon-1), var(--moon-2)); color:#210425;  border-color: rgba(177,78,255,.35); }
 
   section{ padding:36px 0; }
-  .section-title{ font-size:22px; letter-spacing:.01em; margin-bottom:10px; }
+  .section-title{
+    font-size:22px; letter-spacing:.01em; margin-bottom:10px;
+  }
   .blurb{ margin: 0 0 18px 0; }
   .phase{ margin-bottom:10px; }
 
-  .chart{ margin-top:8px; }
+  .chart{ margin-top:8px;
+    /* NEW: stop page from moving while interacting with the chart */
+    overscroll-behavior: contain;
+  }
 
-  /* UPDATED: responsive Dex chart height */
   .chart-frame{
-    border-radius:10px;
-    overflow:hidden;
-    width:100%;
-    height:60vh;        /* scales with viewport height */
-    min-height:480px;   /* never too short */
-    max-height:80vh;    /* don’t overrun very tall screens */
-    border:0;
-  }
-  @media (max-width: 600px){
-    .chart-frame{
-      height:50vh;
-      min-height:380px;
-    }
-  }
-  @media (min-width: 1400px){
-    .chart-frame{
-      height:65vh;
-    }
+    border-radius:10px; overflow:hidden; width:100%; height:420px; border:0;
+    /* NEW: give iframe gestures priority */
+    touch-action: none;
+    -ms-touch-action: none;
   }
 
   /* Contract copy (icon only) */
@@ -156,7 +131,7 @@
   .copy-btn{
     display:inline-flex; align-items:center; justify-content:center;
     width:22px; height:22px; cursor:pointer; opacity:.95; border:0; background:none;
-    color: var(--gold);
+    color: var(--gold); /* make the overlapping squares gold */
   }
   .copy-btn:hover{ opacity:1 }
   #copied{ margin-left:6px; }
@@ -182,9 +157,9 @@
       <p class="lead muted">Scarcity. Stability. Community.</p>
 
       <div class="row">
-        <!-- X (you can set your gradient in CSS) -->
+        <!-- X with brand gradient -->
         <a class="btn btn-x" href="https://x.com/GoldExchangeCoi" target="_blank" rel="noopener" title="X">X</a>
-        <!-- Telegram -->
+        <!-- Telegram with brand gradient -->
         <a class="btn btn-tg" href="https://t.me/GoldXcoinMoon" target="_blank" rel="noopener" title="Telegram">TG</a>
         <!-- DexScreener silver→gray -->
         <a class="btn btn-dex" href="https://dexscreener.com/solana/5QZHizqEkJcQYruJWfdSa9idYa2n6xQ3ttKvSZbPZxtL" target="_blank" rel="noopener" title="DexScreener">DEX</a>
@@ -198,7 +173,7 @@
         <span class="muted">Contract:</span>
         <span id="caText">5QZHizqEkJcQYruJWfdSa9idYa2n6xQ3ttKvSZbPZxtL</span>
         <button id="copyBtn" class="copy-btn" aria-label="Copy contract">
-          <!-- overlapping squares icon (gold via currentColor) -->
+          <!-- overlapping squares icon (now gold via currentColor) -->
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <rect x="7" y="7" width="10" height="10" rx="2" opacity="1"></rect>
             <rect x="3" y="3" width="10" height="10" rx="2" opacity="0.75"></rect>
@@ -233,9 +208,7 @@
         <iframe
           class="chart-frame"
           src="https://dexscreener.com/solana/5QZHizqEkJcQYruJWfdSa9idYa2n6xQ3ttKvSZbPZxtL?embed=1&chartTheme=dark&theme=dark&interval=15"
-          title="DexScreener GOLDX"
-          loading="lazy"
-          referrerpolicy="no-referrer"
+          title="DexScreener GOLDX" loading="lazy" referrerpolicy="no-referrer"
           sandbox="allow-scripts allow-same-origin allow-popups">
         </iframe>
       </section>
@@ -246,25 +219,8 @@
     </main>
   </div>
 
-<!-- BOT-AWARE ANALYTICS (Plausible) -->
 <script>
-(function(){
-  try {
-    var ua = (navigator.userAgent || '').toLowerCase();
-    var isBot = /(bot|crawler|spider|crawling|headless|prerender|facebookexternalhit|slackbot|twitterbot|whatsapp|discordbot|linkedinbot)/i.test(ua);
-    if (!isBot) {
-      var s = document.createElement('script');
-      s.defer = true;
-      s.setAttribute('data-domain', 'YOUR_DOMAIN.com'); /* <-- replace with your domain */
-      s.src = 'https://plausible.io/js/script.js';
-      document.head.appendChild(s);
-    }
-  } catch(e) {}
-})();
-</script>
-
-<script>
-  // Click-to-copy
+  // Click-to-copy (icon only)
   const btn = document.getElementById('copyBtn');
   const ca  = document.getElementById('caText');
   const note= document.getElementById('copied');
