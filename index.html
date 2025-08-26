@@ -48,7 +48,7 @@
   *{ box-sizing:border-box; margin:0; padding:0 }
   body{
     font-family: 'Iceland', sans-serif;   /* apply Iceland everywhere */
-    font-size:16px;                       /* body text = 16px */
+    font-size:18px;                       /* body text = 18px */
     line-height:1.6;
     display:block;
     padding:24px 20px 64px;
@@ -69,19 +69,19 @@
   /* Right-aligned container */
   .wrap{ max-width:var(--max); margin-left:auto; position:relative; z-index:1; text-align:right; }
 
-  header{ padding-top:6px; padding-bottom:18px; }
+  header{ padding-top:6px; padding-bottom:18px; padding-right:18px }
   .logo{
-    height:200px; /* bigger logo as you set */
+    height:300px; /* bigger logo as you set */
     width:auto; vertical-align:middle;
   }
 
   h1{
     font-weight:700; letter-spacing:.01em;
-    font-size: clamp(28px, 6.2vw, 56px);
+    font-size: clamp(34px, 6.2vw, 56px);
     margin:14px 0 6px;
   }
-  .lead{ font-size:16px; }
-  .muted{ font-size:14px; opacity:.9; }
+  .lead{ font-size:18px; }
+  .muted{ font-size:16px; opacity:.9; }
 
   .row{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; margin-top:18px; }
 
@@ -107,7 +107,7 @@
   .section-title{
     font-size:22px; letter-spacing:.01em; margin-bottom:10px;
   }
-  .blurb{ margin: 0 0 16px 0; }
+  .blurb{ margin: 0 0 18px 0; }
   .phase{ margin-bottom:10px; }
 
   .chart{ margin-top:8px; }
@@ -128,7 +128,6 @@
   #copied{ margin-left:6px; }
 
   footer{ margin-top:36px; font-size:13px; opacity:.9; }
-  .line{ border-top:1px solid; margin:22px 0 16px; }
 </style>
 </head>
 <body>
@@ -179,7 +178,12 @@
         <h2 id="about" class="section-title">About</h2>
         <p class="blurb">
           For 5,000 years, gold has represented <b>value, wealth, and trust</b>.
+          
           GOLDX revives that legacy for the digital era — a standard built on <b>scarcity</b>, <b>stability</b>, and <b>community</b>.
+
+          This is not just a token.
+
+          This is the return of The GoldX Standard.
         </p>
       </section>
 
@@ -187,10 +191,10 @@
       <section aria-labelledby="map">
         <h2 id="map" class="section-title">The GoldX Mine Map</h2>
         <p class="muted blurb">Step by step — no hype, just progress.</p>
-        <div class="phase"><b>Phase I — FOUNDATION ✅</b> &nbsp;The mine is operational. DEX verification rolling out.</div>
-        <div class="phase"><b>Phase II — SCARCITY 🔥</b> &nbsp;Supply burns begin. Liquidity fortified.</div>
-        <div class="phase"><b>Phase III — MINING ⚡</b> &nbsp;Staking rewards flow. The Standard spreads.</div>
-        <div class="phase"><b>Phase IV — DOMINION 👑</b> &nbsp;Real gold tie-ins. Cross-chain sovereignty.</div>
+        <div class="phase"><b>Phase I — FOUNDATION |</b> &nbsp;The mine is operational. DEX verification rolling out.</div>
+        <div class="phase"><b>Phase II — SCARCITY |</b> &nbsp;Supply burns begin. Liquidity fortified.</div>
+        <div class="phase"><b>Phase III — MINING |</b> &nbsp;Staking rewards flow. The Standard spreads.</div>
+        <div class="phase"><b>Phase IV — DOMINION |</b> &nbsp;Real gold tie-ins. Cross-chain sovereignty.</div>
       </section>
 
       <!-- Chart -->
@@ -203,10 +207,8 @@
         </iframe>
       </section>
 
-      <div class="line"></div>
-
       <footer>
-        🏛 In God We Trust. In GOLDX We Build. 🏛
+        🏛 In God We Trust. In GOLDX We Build. 🏛 © 2025 GoldX
       </footer>
     </main>
   </div>
