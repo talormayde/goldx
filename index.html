@@ -25,7 +25,7 @@
 
     /* Button gradients */
     .btn-x {background: linear-gradient(180deg, #F4C558, #2b2b2b, #000000); color: #fff;}            /* X button */
-    .btn-tg {background: linear-gradient(180deg, #29B6F6, #3A7BFF, #001F54); color: #E0F7FA;}          /* Telegram button */
+    .btn-tg {background: linear-gradient(180deg, #29B6F6, #3A7BFF, #001F54); color: #E0F7FA;}        /* Telegram button */
     --dex-from:#D9D9D9; --dex-to:#8C8C8C;        /* DexScreener button */
   }
 
@@ -62,7 +62,6 @@
       radial-gradient(80% 80% at 0% 50%, rgba(244,197,88,.30), transparent 60%),
       linear-gradient(90deg, rgba(244,197,88,.24), rgba(244,197,88,.08) 45%, transparent 100%);
     filter: blur(18px) saturate(1.05);
-    /* make sure the blur never creates scrollbars */
     will-change: transform;
   }
 
@@ -71,7 +70,7 @@
 
   header{ padding-top:6px; padding-bottom:18px; padding-right:18px }
   .logo{
-    height:300px; /* bigger logo as you set */
+    height:300px; /* bigger logo */
     width:auto; vertical-align:middle;
   }
 
@@ -85,7 +84,7 @@
 
   .row{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; margin-top:18px; }
 
-  /* Small buttons with soft opacity and brand gradients */
+  /* Small buttons */
   .btn{
     display:inline-flex; align-items:center; justify-content:center;
     gap:8px; padding:6px 10px; border-radius:8px;
@@ -111,18 +110,36 @@
   .phase{ margin-bottom:10px; }
 
   .chart{ margin-top:8px; }
+  /* UPDATED responsive Dex chart height */
   .chart-frame{
-    border-radius:10px; overflow:hidden; width:100%; height:420px; border:0;
+    border-radius:10px;
+    overflow:hidden;
+    width:100%;
+    height:60vh;        /* scales with viewport */
+    min-height:480px;   /* never too short */
+    max-height:80vh;    /* never overtake whole screen */
+    border:0;
+  }
+  @media (max-width: 600px){
+    .chart-frame{
+      height:50vh;
+      min-height:380px;
+    }
+  }
+  @media (min-width: 1400px){
+    .chart-frame{
+      height:65vh;
+    }
   }
 
-  /* Contract copy (icon only) */
+  /* Contract copy */
   .contract{
     display:inline-flex; align-items:center; gap:10px; font-size:14px; margin-top:12px;
   }
   .copy-btn{
     display:inline-flex; align-items:center; justify-content:center;
     width:22px; height:22px; cursor:pointer; opacity:.95; border:0; background:none;
-    color: var(--gold); /* make the overlapping squares gold */
+    color: var(--gold);
   }
   .copy-btn:hover{ opacity:1 }
   #copied{ margin-left:6px; }
@@ -137,34 +154,26 @@
 
   <!-- Right-aligned container -->
   <div class="wrap">
-    <!-- Top: GOLDX logo -->
     <header>
       <img src="GOLDX_ICON.png" class="logo" alt="GOLDX">
     </header>
 
-    <!-- Hero -->
     <main>
       <h1>The Digital Gold Mine</h1>
       <p class="lead muted">Scarcity. Stability. Community.</p>
 
       <div class="row">
-        <!-- X with brand gradient -->
         <a class="btn btn-x" href="https://x.com/GoldExchangeCoi" target="_blank" rel="noopener" title="X">X</a>
-        <!-- Telegram with brand gradient -->
         <a class="btn btn-tg" href="https://t.me/GoldXcoinMoon" target="_blank" rel="noopener" title="Telegram">TG</a>
-        <!-- DexScreener silver→gray -->
         <a class="btn btn-dex" href="https://dexscreener.com/solana/5QZHizqEkJcQYruJWfdSa9idYa2n6xQ3ttKvSZbPZxtL" target="_blank" rel="noopener" title="DexScreener">DEX</a>
-        <!-- Jupiter / Moonshot -->
         <a class="btn btn-jup"  href="https://jup.ag/tokens/5hpVjhn7PdVTme9HxMSDyb37BAeeb3vurN3hhHeWmoon" target="_blank" rel="noopener" title="Jupiter">Jupiter</a>
         <a class="btn btn-moon" href="https://moonshot.com/5hpVjhn7PdVTme9HxMSDyb37BAeeb3vurN3hhHeWmoon?ref=zDxzbNkUqe" target="_blank" rel="noopener" title="Moonshot">Moonshot</a>
       </div>
 
-      <!-- Contract (click icon to copy) -->
       <div class="contract">
         <span class="muted">Contract:</span>
         <span id="caText">5QZHizqEkJcQYruJWfdSa9idYa2n6xQ3ttKvSZbPZxtL</span>
         <button id="copyBtn" class="copy-btn" aria-label="Copy contract">
-          <!-- overlapping squares icon (now gold via currentColor) -->
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <rect x="7" y="7" width="10" height="10" rx="2" opacity="1"></rect>
             <rect x="3" y="3" width="10" height="10" rx="2" opacity="0.75"></rect>
@@ -173,33 +182,24 @@
         <span id="copied" class="muted" style="display:none;">Copied</span>
       </div>
 
-      <!-- About -->
       <section aria-labelledby="about">
         <h2 id="about" class="section-title">About</h2>
-        <p class="blurb">
-          <p>For 5,000 years, gold has represented <b>value, wealth, and trust</b>.</p>
-          
-          <p>GOLDX revives that legacy for the digital era.</p>
-        
-          <p>Mined on principles of <b>scarcity</b>, <b>stability</b>, and <b>community</b>.</p>
-
-          <p>This is not just a token.</p>
-
-          <p>This is the return of <b>The GOLDX Standard.</b></p>
-        </p>
+        <p>For 5,000 years, gold has represented <b>value, wealth, and trust</b>.</p>
+        <p>GOLDX revives that legacy for the digital era.</p>
+        <p>Mined on principles of <b>scarcity</b>, <b>stability</b>, and <b>community</b>.</p>
+        <p>This is not just a token.</p>
+        <p>This is the return of <b>The GOLDX Standard.</b></p>
       </section>
 
-      <!-- Mine Map -->
       <section aria-labelledby="map">
         <h2 id="map" class="section-title">The GOLDX Mine Map</h2>
         <p class="muted blurb">Step by step — no hype, just progress.</p>
-        <div class="phase"><b>Phase I — FOUNDATION |</b> &nbsp;The mine is operational. DEX verification rolling out.</div>
-        <div class="phase"><b>Phase II — SCARCITY |</b> &nbsp;Supply burns begin. Liquidity fortified.</div>
-        <div class="phase"><b>Phase III — MINING |</b> &nbsp;Staking rewards flow. The Standard spreads.</div>
-        <div class="phase"><b>Phase IV — DOMINION |</b> &nbsp;Real gold tie-ins. Cross-chain sovereignty.</div>
+        <div class="phase"><b>Phase I — FOUNDATION |</b> The mine is operational. DEX verification rolling out.</div>
+        <div class="phase"><b>Phase II — SCARCITY |</b> Supply burns begin. Liquidity fortified.</div>
+        <div class="phase"><b>Phase III — MINING |</b> Staking rewards flow. The Standard spreads.</div>
+        <div class="phase"><b>Phase IV — DOMINION |</b> Real gold tie-ins. Cross-chain sovereignty.</div>
       </section>
 
-      <!-- Chart -->
       <section id="chart" aria-labelledby="chart-title" class="chart">
         <h2 id="chart-title" class="section-title">Chart</h2>
         <iframe
@@ -216,7 +216,7 @@
   </div>
 
 <script>
-  // Click-to-copy (icon only)
+  // Click-to-copy
   const btn = document.getElementById('copyBtn');
   const ca  = document.getElementById('caText');
   const note= document.getElementById('copied');
