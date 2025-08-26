@@ -5,141 +5,111 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>GOLDX — The Digital Gold Mine</title>
 <meta name="description" content="Scarcity. Stability. Community. GOLDX revives gold’s legacy for the digital era.">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#0B0C0F; --text:#F7F7FA; --muted:#A0A6B4; --gold:#F4C558;
-    --line:#181B22; --max:1040px;
-    --jup-1:#00E59B; --jup-2:#00FFA3; --moon-1:#B14EFF; --moon-2:#FF6EC7;
+  :root {
+    --gold: #F4C558;
+    --text-dark: #0C0D10;
+    --text-light: #F7F7FA;
+    --muted-dark: #555;
+    --muted-light: #A0A6B4;
+    --max: 720px;
   }
-  *{box-sizing:border-box} html,body{height:100%}
-  body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
-  a{color:var(--text);text-decoration:none}
-  .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
-  /* nav */
-  .nav{position:sticky;top:0;background:rgba(11,12,15,.75);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:50}
-  .nav .inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-  .brand{display:flex;gap:10px;align-items:center;font-weight:800}
-  .brand img{width:28px;height:28px}
-  .links{display:flex;gap:12px;align-items:center}
-  .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:#12151C}
-  .btn.gold{border-color:transparent;background:var(--gold);color:#1d1504;font-weight:800}
-  .btn.jup{background:linear-gradient(180deg,var(--jup-2),var(--jup-1));color:#031e16}
-  .btn.moon{background:linear-gradient(180deg,var(--moon-1),var(--moon-2));color:#17021c}
-  /* hero */
-  header{padding:72px 0 40px;border-bottom:1px solid var(--line);text-align:center}
-  h1{font-family:Cinzel,serif;font-weight:700;font-size:clamp(32px,6vw,56px);line-height:1.1;margin:6px 0 10px}
-  .lead{color:var(--muted);max-width:760px;margin:0 auto 16px}
-  .row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-  /* sections */
-  section{padding:56px 0;border-bottom:1px solid var(--line)}
-  h2{font-family:Cinzel,serif;font-size:28px;margin:0 0 8px;text-align:center}
-  .muted{text-align:center;color:var(--muted);max-width:780px;margin:0 auto 18px}
-  .grid{display:grid;gap:16px;grid-template-columns:repeat(4,1fr);max-width:900px;margin:0 auto}
-  @media (max-width:900px){.grid{grid-template-columns:1fr 1fr}}
-  @media (max-width:520px){.grid{grid-template-columns:1fr}}
-  .card{border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center;background:#0E1016}
-  .card em{font-style:normal;color:var(--gold);font-weight:800}
-  /* mine map with soft bg */
-  .map{position:relative}
-  .map::before{content:"";position:absolute;inset:0;opacity:.10;background:url('mine_map_bg.png') center/cover no-repeat;filter:saturate(1.05)}
-  .steps{position:relative;display:grid;gap:16px;grid-template-columns:1fr 1fr;max-width:900px;margin:0 auto}
-  @media (max-width:900px){.steps{grid-template-columns:1fr}}
-  .step{border:1px solid var(--line);border-radius:12px;background:#0E1016;padding:16px;text-align:center}
-  /* chart */
-  .chart{max-width:900px;margin:0 auto}
-  .frame{position:relative;width:100%;padding-bottom:62%}
-  .frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:12px;background:#0d0f14}
-  /* footer */
-  footer{padding:40px 0;text-align:center;color:var(--muted)}
+  @media (prefers-color-scheme: dark) {
+    body { background: #0B0B0D; color: var(--text-light); }
+    .muted { color: var(--muted-light); }
+    .btn { border-color: #222; }
+  }
+  @media (prefers-color-scheme: light) {
+    body { background: #FFFFFF; color: var(--text-dark); }
+    .muted { color: var(--muted-dark); }
+    .btn { border-color: #ddd; }
+  }
+  * { box-sizing: border-box; margin:0; padding:0; }
+  body {
+    font-family: Inter, system-ui, sans-serif;
+    line-height: 1.5;
+    text-align: center;
+    padding: 40px 20px;
+  }
+  h1 {
+    font-family: Cinzel, serif;
+    font-size: clamp(36px, 7vw, 64px);
+    margin-bottom: 12px;
+  }
+  h2 {
+    font-family: Cinzel, serif;
+    font-size: 28px;
+    margin: 40px 0 12px;
+  }
+  p { max-width: var(--max); margin: 0 auto 20px; }
+  .muted { font-size: 16px; }
+  .btn-row {
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:12px;
+    margin: 24px 0;
+  }
+  .btn {
+    display:inline-block;
+    padding:10px 18px;
+    border:1px solid;
+    border-radius:8px;
+    font-weight:600;
+    text-decoration:none;
+    transition: background .2s;
+  }
+  .btn.gold { background: var(--gold); color:#000; border-color: var(--gold); }
+  .btn:hover { opacity:.85; }
+  section { padding: 40px 0; }
+  iframe { width:100%; max-width:var(--max); height:480px; border:0; border-radius:8px; }
+  footer { margin-top:60px; font-size:14px; }
 </style>
 </head>
 <body>
-  <nav class="nav">
-    <div class="wrap inner">
-      <div class="brand"><img src="GOLDX_ICON.png" alt=""><span>GOLDX</span></div>
-      <div class="links">
-        <a class="btn" href="https://x.com/GoldExchangeCoi" target="_blank" rel="noopener">X</a>
-        <a class="btn" href="https://t.me/GoldXcoinMoon" target="_blank" rel="noopener">Telegram</a>
-        <a class="btn gold" href="#chart">Chart</a>
-      </div>
-    </div>
-  </nav>
 
-  <header class="wrap">
-    <div style="margin-bottom:8px;color:#B9B28F;font-weight:800;">THE RETURN OF THE STANDARD</div>
-    <h1>Digital Gold for the New Era.</h1>
-    <p class="lead">Scarcity. Stability. Community. GOLDX brings the timeless trust of gold to a modern, crypto-native standard.</p>
-    <div class="row">
-      <button id="copy" class="btn">📋 Copy Contract</button>
-      <a class="btn" href="#map">View Mine Map</a>
-    </div>
-  </header>
+  <!-- Hero -->
+  <h1>GOLDX</h1>
+  <p style="font-size:20px; font-weight:600;">The Digital Gold Mine</p>
+  <p class="muted">Scarcity. Stability. Community.</p>
+  <div class="btn-row">
+    <a class="btn gold" href="#chart">Chart</a>
+    <a class="btn" href="https://t.me/GoldXcoinMoon" target="_blank">Telegram</a>
+    <a class="btn" href="https://x.com/GoldExchangeCoi" target="_blank">X</a>
+  </div>
 
-  <section id="why" class="wrap">
-    <h2>Why GOLDX?</h2>
-    <p class="muted">Clear principles that compound trust and momentum.</p>
-    <div class="grid">
-      <div class="card">🔥<br><em>Burns → Scarcity</em><br><span class="muted">Supply compresses over time.</span></div>
-      <div class="card">💧<br><em>Liquidity Lock → Stability</em><br><span class="muted">Confidence for new buyers.</span></div>
-      <div class="card">⛏️<br><em>Staking → Mining Rewards</em><br><span class="muted">Reward holders, not flippers.</span></div>
-      <div class="card">🏆<br><em>Tokenized Gold (Future)</em><br><span class="muted">Symbolic tie-ins to real gold.</span></div>
-    </div>
+  <!-- About -->
+  <section>
+    <h2>About</h2>
+    <p>For 5,000 years, gold has represented <b>value, wealth, and trust</b>. GOLDX revives that legacy for the digital era — a standard built on <b>scarcity</b>, <b>stability</b>, and <b>community</b>.</p>
   </section>
 
-  <section id="map" class="wrap map">
+  <!-- Mine Map -->
+  <section>
     <h2>The GoldX Mine Map</h2>
-    <p class="muted">Built step by step — no hype, just progress.</p>
-    <div class="steps">
-      <div class="step"><strong>PHASE I — FOUNDATION ✅</strong><br>The mine is operational. Community assembles. Website + DEX verification rolling out.</div>
-      <div class="step"><strong>PHASE II — SCARCITY PROTOCOL 🔥</strong><br>Supply burns begin. Liquidity fortified. Visible transparency.</div>
-      <div class="step"><strong>PHASE III — MINING EMPIRE ⚡</strong><br>Staking rewards flow. Holders prosper. The Standard spreads.</div>
-      <div class="step"><strong>PHASE IV — DIGITAL GOLD DOMINION 👑</strong><br>Real gold tie-ins. Cross-chain sovereignty. A new monetary standard.</div>
-    </div>
+    <p class="muted">Step by step — no hype, just progress.</p>
+    <p><b>Phase I — FOUNDATION ✅</b><br>The mine is operational. Website + DEX verification rolling out.</p>
+    <p><b>Phase II — SCARCITY 🔥</b><br>Supply burns begin. Liquidity fortified.</p>
+    <p><b>Phase III — MINING ⚡</b><br>Staking rewards flow. The standard spreads.</p>
+    <p><b>Phase IV — DOMINION 👑</b><br>Real gold tie-ins. Cross-chain sovereignty.</p>
   </section>
 
-  <section id="chart" class="wrap">
+  <!-- Chart -->
+  <section id="chart">
     <h2>Chart</h2>
-    <p class="muted">Trade responsibly. Not financial advice.</p>
-    <div class="chart">
-      <div class="frame">
-        <iframe src="https://dexscreener.com/solana/5QZHizqEkJcQYruJWfdSa9idYa2n6xQ3ttKvSZbPZxtL?embed=1&chartTheme=dark&theme=dark&interval=15" title="DexScreener GOLDX"></iframe>
-      </div>
-      <div class="row" style="margin-top:12px">
-        <a class="btn jup"  href="https://jup.ag/tokens/5hpVjhn7PdVTme9HxMSDyb37BAeeb3vurN3hhHeWmoon" target="_blank" rel="noopener">Buy on Jupiter</a>
-        <a class="btn moon" href="https://moonshot.com/5hpVjhn7PdVTme9HxMSDyb37BAeeb3vurN3hhHeWmoon?ref=zDxzbNkUqe" target="_blank" rel="noopener">Buy on Moonshot</a>
-        <a class="btn"      href="https://dexscreener.com/solana/5QZHizqEkJcQYruJWfdSa9idYa2n6xQ3ttKvSZbPZxtL" target="_blank" rel="noopener">Open DexScreener</a>
-      </div>
+    <iframe src="https://dexscreener.com/solana/5QZHizqEkJcQYruJWfdSa9idYa2n6xQ3ttKvSZbPZxtL?embed=1&chartTheme=dark&theme=dark"></iframe>
+    <div class="btn-row">
+      <a class="btn gold" href="https://jup.ag/tokens/5hpVjhn7PdVTme9HxMSDyb37BAeeb3vurN3hhHeWmoon" target="_blank">Buy on Jupiter</a>
+      <a class="btn" href="https://moonshot.com/5hpVjhn7PdVTme9HxMSDyb37BAeeb3vurN3hhHeWmoon" target="_blank">Buy on Moonshot</a>
     </div>
   </section>
 
-  <section class="wrap">
-    <div class="grid" style="grid-template-columns:1fr 1fr;">
-      <div class="card"><h3 style="margin:0 0 6px">🏛 The GoldX Standard</h3><p style="color:var(--muted)">We build with discipline and transparency. Miners &gt; Spectators.</p></div>
-      <div class="card"><h3 style="margin:0 0 6px">Join the Community</h3>
-        <div class="row" style="justify-content:center">
-          <a class="btn" href="https://t.me/GoldXcoinMoon" target="_blank" rel="noopener">Telegram</a>
-          <a class="btn" href="https://x.com/GoldExchangeCoi" target="_blank" rel="noopener">Follow on X</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer class="wrap">
-    <div>🏛 In God We Trust. In GOLDX We Build. 🏛</div>
-    <div style="color:var(--muted)">© <span id="year"></span> GOLDX — Community-driven. Not financial advice.</div>
+  <!-- Footer -->
+  <footer>
+    <div>📋 Contract: 5QZHizqEkJcQYruJWfdSa9idYa2n6xQ3ttKvSZbPZxtL</div>
+    <div style="margin-top:10px;">🏛 In God We Trust. In GOLDX We Build.</div>
   </footer>
 
-  <script>
-    // Copy contract
-    document.getElementById('copy').addEventListener('click', async () => {
-      const text = "5QZHizqEkJcQYruJWfdSa9idYa2n6xQ3ttKvSZbPZxtL";
-      try { await navigator.clipboard.writeText(text);
-        const btn = document.getElementById('copy'); const old = btn.textContent;
-        btn.textContent = '✅ Copied'; setTimeout(()=>btn.textContent = old, 1200);
-      } catch(e){}
-    });
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
 </body>
 </html>
