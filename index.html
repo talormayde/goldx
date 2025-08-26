@@ -46,8 +46,14 @@
 
   /* prevent any horizontal jiggle */
   html, body { overflow-x: hidden; }
-  /* lock page scroll while interacting with chart */
-  body.lock-scroll { overflow: hidden; }
+
+  /* HARD SCROLL LOCK (used only while interacting with chart) */
+  .scroll-fixed {
+    position: fixed !important;
+    inset: 0 0 auto 0;       /* lock to top; we will set top offset via JS */
+    width: 100%;
+    overflow: hidden !important;
+  }
 
   *{ box-sizing:border-box; margin:0; padding:0 }
   body{
@@ -73,9 +79,7 @@
   .wrap{ max-width:var(--max); margin-left:auto; position:relative; z-index:1; text-align:right; }
 
   header{ padding-top:6px; padding-bottom:18px; padding-right:18px }
-  .logo{
-    height:300px; width:auto; vertical-align:middle;
-  }
+  .logo{ height:300px; width:auto; vertical-align:middle; }
 
   h1{
     font-weight:700; letter-spacing:.01em;
@@ -110,29 +114,12 @@
   .blurb{ margin: 0 0 18px 0; }
   .phase{ margin-bottom:10px; }
 
-  .chart{ margin-top:8px;
-    /* NEW: stop page from moving while interacting with the chart */
-    overscroll-behavior: contain;
-  }
+  .chart{ margin-top:8px; overscroll-behavior: contain; } /* mitigate scroll chaining */
 
   .chart-frame{
     border-radius:10px; overflow:hidden; width:100%; height:420px; border:0;
-    /* NEW: give iframe gestures priority */
-    touch-action: none;
-    -ms-touch-action: none;
+    touch-action: none; -ms-touch-action: none; /* help pointer gestures */
   }
-
-  /* Contract copy (icon only) */
-  .contract{
-    display:inline-flex; align-items:center; gap:10px; font-size:14px; margin-top:12px;
-  }
-  .copy-btn{
-    display:inline-flex; align-items:center; justify-content:center;
-    width:22px; height:22px; cursor:pointer; opacity:.95; border:0; background:none;
-    color: var(--gold);
-  }
-  .copy-btn:hover{ opacity:1 }
-  #copied{ margin-left:6px; }
 
   footer{ margin-top:36px; font-size:13px; opacity:.9; }
 </style>
@@ -167,11 +154,10 @@
       </div>
 
       <!-- Contract (click icon to copy) -->
-      <div class="contract">
+      <div class="contract" style="display:inline-flex; align-items:center; gap:10px; font-size:14px; margin-top:12px;">
         <span class="muted">Contract:</span>
         <span id="caText">5QZHizqEkJcQYruJWfdSa9idYa2n6xQ3ttKvSZbPZxtL</span>
-        <button id="copyBtn" class="copy-btn" aria-label="Copy contract">
-          <!-- overlapping squares icon (now gold via currentColor) -->
+        <button id="copyBtn" class="copy-btn" aria-label="Copy contract" style="display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; cursor:pointer; opacity:.95; border:0; background:none; color: var(--gold);">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <rect x="7" y="7" width="10" height="10" rx="2" opacity="1"></rect>
             <rect x="3" y="3" width="10" height="10" rx="2" opacity="0.75"></rect>
@@ -223,45 +209,56 @@
 
 <script>
   // Click-to-copy (icon only)
-  const btn = document.getElementById('copyBtn');
-  const ca  = document.getElementById('caText');
-  const note= document.getElementById('copied');
-  btn.addEventListener('click', async () => {
-    try{
-      await navigator.clipboard.writeText(ca.textContent.trim());
-      note.style.display = 'inline';
-      setTimeout(()=> note.style.display = 'none', 1200);
-    }catch(e){}
-  });
+  (function(){
+    const btn = document.getElementById('copyBtn');
+    const ca  = document.getElementById('caText');
+    const note= document.getElementById('copied');
+    btn.addEventListener('click', async () => {
+      try{
+        await navigator.clipboard.writeText(ca.textContent.trim());
+        note.style.display = 'inline';
+        setTimeout(()=> note.style.display = 'none', 1200);
+      }catch(e){}
+    });
+  })();
 
-  // Lock page scroll while interacting with the chart (mouse/touch)
+  // SAFARI-FRIENDLY HARD SCROLL-LOCK WHILE USING THE CHART
   (function(){
     const wrap = document.getElementById('chartWrap');
     if (!wrap) return;
-    let locked = false;
 
-    const lock = () => {
+    let locked = false;
+    let scrollY = 0;
+
+    function lockScroll(){
       if (locked) return;
       locked = true;
-      document.body.classList.add('lock-scroll');
-    };
-    const unlock = () => {
+      scrollY = window.scrollY || document.documentElement.scrollTop;
+      // Freeze body in place without jump
+      document.body.classList.add('scroll-fixed');
+      document.body.style.top = `-${scrollY}px`;
+    }
+    function unlockScroll(){
+      if (!locked) return;
       locked = false;
-      document.body.classList.remove('lock-scroll');
-    };
+      document.body.classList.remove('scroll-fixed');
+      document.body.style.top = '';
+      window.scrollTo(0, scrollY);
+    }
 
-    wrap.addEventListener('pointerdown', lock);
-    wrap.addEventListener('pointerup',   unlock);
-    wrap.addEventListener('pointercancel', unlock);
-    wrap.addEventListener('mouseleave', unlock);
-    wrap.addEventListener('touchstart', lock, {passive:false});
-    wrap.addEventListener('touchend',   unlock);
-    wrap.addEventListener('touchcancel',unlock);
+    // Lock as soon as the user's pointer/touch engages the chart area
+    wrap.addEventListener('pointerdown', lockScroll);
+    wrap.addEventListener('pointerup',   unlockScroll);
+    wrap.addEventListener('pointercancel', unlockScroll);
+    wrap.addEventListener('mouseleave', unlockScroll);
 
-    // Prevent page scroll while locked (iOS Safari fix)
-    document.addEventListener('touchmove', function(e){
-      if (locked) e.preventDefault();
-    }, {passive:false});
+    // Touch events (iOS Safari)
+    wrap.addEventListener('touchstart', lockScroll, {passive:false});
+    wrap.addEventListener('touchend',   unlockScroll);
+    wrap.addEventListener('touchcancel',unlockScroll);
+
+    // Safety: if the window loses focus (e.g., link opened), unlock
+    window.addEventListener('blur', unlockScroll);
   })();
 </script>
 </body>
