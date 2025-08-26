@@ -5,141 +5,138 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>GOLDX — The Return of The Standard</title>
 <meta name="description" content="GOLDX revives gold’s legacy for the digital era. Scarcity. Stability. Community. #TheGoldXStandard">
-<meta name="theme-color" content="#0b0b0d">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-  /* ---------- THEME ---------- */
+  /* ===== THEME ===== */
   :root{
-    --maxw:1120px;
-    --gold:#f4ca58; --gold-2:#e2b646; --gold-3:#a57d1a;
-    --bg:#0b0b0d; --text:#f6f7fb; --muted:#a9afbf;
-    --glass:rgba(16,19,25,.55);
-    --stroke:rgba(255,255,255,.07);
+    --maxw:1140px;
+    --gold:#F4CA58; --gold-2:#E2B646; --gold-3:#A67C1A;
+    --bg:#0B0B0D; --text:#F6F7FB; --muted:#A9AFBF;
+    --glass:rgba(16,19,25,.55); --stroke:rgba(255,255,255,.07);
+    --jup:#00E59B;                 /* Jupiter teal-green (tweakable) */
+    --moon-1:#B14EFF; --moon-2:#FF5E9C; /* Moonshot purple→pink (tweakable) */
   }
   @media (prefers-color-scheme: light){
     :root{
-      --bg:#f6f6f8; --text:#0c0d10; --muted:#4a4f5e;
-      --glass:rgba(255,255,255,.6);
-      --stroke:rgba(0,0,0,.06);
+      --bg:#F6F6F8; --text:#0C0D10; --muted:#4A4F5E;
+      --glass:rgba(255,255,255,.65); --stroke:rgba(0,0,0,.06);
     }
   }
-
-  /* ---------- BASE ---------- */
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
-    margin:0; background:var(--bg); color:var(--text);
-    font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif; line-height:1.6;
-    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
   }
-  a{color:var(--gold); text-decoration:none}
-  a:hover{text-decoration:underline}
-  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 20px}
-  .centered{max-width:980px; margin-inline:auto; text-align:center}
+  a{color:var(--gold);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+  .centered{max-width:980px;margin-inline:auto;text-align:center}
 
-  /* ---------- GOLD EDGE GLOW FRAME ---------- */
-  .glow{
-    position:fixed; inset:-10vmax; pointer-events:none; z-index:0;
-    background:
-      radial-gradient(55vmax 35vmax at -10% 50%, rgba(244,202,88,.18), transparent 55%),
-      radial-gradient(55vmax 35vmax at 110% 50%, rgba(244,202,88,.18), transparent 55%),
-      radial-gradient(70vmax 20vmax at 50% -10%, rgba(244,202,88,.12), transparent 60%),
-      radial-gradient(70vmax 20vmax at 50% 110%, rgba(244,202,88,.10), transparent 60%);
-    filter:saturate(1.1);
+  /* ===== GOLD EDGE GLOW (FULL HEIGHT SIDES) ===== */
+  .edge{
+    position:fixed;top:-10vh;bottom:-10vh;width:min(8vw,96px);z-index:0;pointer-events:none;
+    background:linear-gradient(180deg, rgba(244,202,88,.00), rgba(244,202,88,.45) 20%, rgba(244,202,88,.55) 50%, rgba(244,202,88,.45) 80%, rgba(244,202,88,.00));
+    filter:blur(8px) saturate(1.1);
   }
+  .edge.left{left:-2vw}
+  .edge.right{right:-2vw}
   @media (prefers-reduced-motion:no-preference){
-    .glow{ animation: shimmer 12s linear infinite }
-    @keyframes shimmer{
-      0%{ filter:hue-rotate(0deg) saturate(1.05) }
-      50%{ filter:hue-rotate(10deg) saturate(1.2) }
-      100%{ filter:hue-rotate(0deg) saturate(1.05) }
-    }
+    @keyframes pulse{ 0%{opacity:.9} 50%{opacity:1} 100%{opacity:.9} }
+    .edge{animation:pulse 6s ease-in-out infinite}
   }
 
-  /* ---------- NAV ---------- */
-  .nav{position:sticky; top:0; z-index:40; background:rgba(11,11,13,.55); backdrop-filter:blur(10px); border-bottom:1px solid var(--stroke)}
+  /* ===== NAV ===== */
+  .nav{position:sticky;top:0;z-index:40;background:rgba(11,11,13,.55);backdrop-filter:blur(10px)}
   @media (prefers-color-scheme: light){ .nav{background:rgba(255,255,255,.6)} }
-  .nav .inner{display:flex; align-items:center; justify-content:space-between; padding:12px 0}
-  .brand{display:flex; align-items:center; gap:12px}
-  .brand img{width:32px; height:32px; border-radius:8px}
-  .brand-name{font-family:Cinzel,serif; font-weight:700; letter-spacing:.03em}
-  .actions{display:flex; gap:10px; flex-wrap:wrap; justify-content:center}
+  .nav .inner{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand img{width:32px;height:32px;border-radius:8px}
+  .brand-name{font-family:Cinzel,serif;font-weight:700;letter-spacing:.03em}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
   .btn{
-    display:inline-flex; align-items:center; justify-content:center; gap:8px;
-    padding:10px 14px; border-radius:12px; font-weight:800; border:0;
-    background:linear-gradient(180deg,var(--gold),var(--gold-2)); color:#1a1204;
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:10px 14px;border-radius:12px;font-weight:800;border:0;
+    background:linear-gradient(180deg,var(--gold),var(--gold-2));color:#1a1204;
     box-shadow:0 10px 28px rgba(244,202,88,.25)
   }
-  .btn.secondary{
-    background:var(--glass); color:var(--text); border:1px solid var(--stroke); box-shadow:none
-  }
+  .btn.secondary{background:var(--glass);color:var(--text);border:1px solid var(--stroke);box-shadow:none}
   .btn:active{transform:translateY(1px)}
 
-  /* ---------- HERO (no photo; edge glow shows) ---------- */
-  header.hero{
-    position:relative; min-height:74svh; display:grid; place-items:center; text-align:center; overflow:hidden;
-    z-index:1; /* above the glow */
+  /* ===== STICKY INVESTOR CTA BAR ===== */
+  .cta{
+    position:sticky;top:58px;z-index:30;background:rgba(11,11,13,.45);
+    backdrop-filter:blur(10px);padding:10px 0;
   }
-  .badge{
-    display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:999px;
-    background:linear-gradient(180deg,#ffecb3,var(--gold)); color:#2b2205; font-weight:800; letter-spacing:.02em
+  @media (prefers-color-scheme: light){.cta{background:rgba(255,255,255,.5)}}
+  .cta .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+  .btn.jup{
+    background:var(--jup);color:#022018;box-shadow:0 10px 24px rgba(0,229,155,.25);
   }
-  h1{font-family:Cinzel,serif; font-weight:700; font-size:clamp(32px,6.8vw,64px); line-height:1.06; margin:16px 0 10px}
-  .lead{font-size:clamp(16px,2.6vw,20px); color:var(--muted); max-width:900px; margin:0 auto}
-  .row{display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:18px}
-  .copy{
-    display:inline-flex; align-items:center; justify-content:center; gap:8px;
-    border:1px solid var(--stroke); border-radius:12px; padding:10px 14px;
-    background:var(--glass); backdrop-filter:blur(8px); cursor:pointer
+  .btn.moon{
+    background:linear-gradient(180deg,var(--moon-1),var(--moon-2));color:#17051e;
+    box-shadow:0 10px 24px rgba(177,78,255,.25);
   }
 
-  /* ---------- GLASS CARDS with GOLD BORDER ---------- */
+  /* ===== HERO ===== */
+  header.hero{position:relative;min-height:64svh;display:grid;place-items:center;text-align:center;z-index:1}
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;
+    background:linear-gradient(180deg,#FFECB3,var(--gold));color:#2b2205;font-weight:800;letter-spacing:.02em
+  }
+  h1{font-family:Cinzel,serif;font-weight:700;font-size:clamp(32px,6.8vw,64px);line-height:1.06;margin:16px 0 10px}
+  .lead{font-size:clamp(16px,2.6vw,20px);color:var(--muted);max-width:900px;margin:0 auto}
+  .row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+  .copy{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:1px solid var(--stroke);border-radius:12px;padding:10px 14px;
+    background:var(--glass);backdrop-filter:blur(8px);cursor:pointer
+  }
+
+  /* ===== GLASS CARDS with SUBTLE GOLD BORDER ===== */
   .card{
-    position:relative; padding:18px; border-radius:16px; text-align:center;
-    background:var(--glass); backdrop-filter:blur(10px); border:1px solid var(--stroke);
+    position:relative;padding:18px;border-radius:16px;text-align:center;
+    background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--stroke);
     box-shadow:0 10px 28px rgba(0,0,0,.25);
   }
   .card::before{
-    content:""; position:absolute; inset:0; border-radius:16px; padding:1px;
-    background:linear-gradient(135deg, rgba(244,202,88,.9), rgba(165,125,26,.4));
-    -webkit-mask:
-      linear-gradient(#000 0 0) content-box, 
-      linear-gradient(#000 0 0);
-    -webkit-mask-composite:xor; mask-composite:exclude;
-    opacity:.28; pointer-events:none;
+    content:"";position:absolute;inset:0;border-radius:16px;padding:1px;
+    background:linear-gradient(135deg, rgba(244,202,88,.9), rgba(165,125,26,.35));
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor; mask-composite:exclude; opacity:.26; pointer-events:none;
   }
 
-  /* ---------- SECTIONS ---------- */
-  section{padding:58px 0; border-top:1px solid var(--stroke)}
-  h2{font-family:Cinzel,serif; font-size:28px; margin:0 0 12px; text-align:center}
-  .muted{text-align:center; color:var(--muted); max-width:820px; margin:0 auto 18px}
+  /* ===== SECTIONS (no dividing lines) ===== */
+  section{padding:56px 0}
+  h2{font-family:Cinzel,serif;font-size:28px;margin:0 0 12px;text-align:center}
+  .muted{text-align:center;color:var(--muted);max-width:820px;margin:0 auto 18px}
 
-  .features{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; max-width:980px; margin:0 auto}
+  .features{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:980px;margin:0 auto}
   @media (max-width:980px){.features{grid-template-columns:1fr 1fr}}
   @media (max-width:520px){.features{grid-template-columns:1fr}}
   .feature{padding:16px}
-  .feature em{font-style:normal; color:var(--gold); font-weight:800}
+  .feature em{font-style:normal;color:var(--gold);font-weight:800}
 
-  .steps{display:grid; grid-template-columns:1fr 1fr; gap:16px; max-width:980px; margin:0 auto}
+  .steps{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:980px;margin:0 auto}
   @media (max-width:900px){.steps{grid-template-columns:1fr}}
   .step{padding:18px}
-  .tag{position:absolute; right:12px; top:12px; background:#182011; border:1px solid #25351a; color:#a7f084; padding:3px 8px; border-radius:999px; font-size:12px; font-weight:800}
+  .tag{position:absolute;right:12px;top:12px;background:#182011;border:1px solid #25351a;color:#a7f084;padding:3px 8px;border-radius:999px;font-size:12px;font-weight:800}
 
-  /* ---------- CHART ---------- */
-  .chart-wrap{position:relative; width:100%; max-width:980px; margin:0 auto; padding-bottom:130%}
+  /* ===== CHART ===== */
+  .chart-wrap{position:relative;width:100%;max-width:980px;margin:0 auto;padding-bottom:130%}
   @media(min-width:1200px){.chart-wrap{padding-bottom:62%}}
-  .chart-wrap iframe{position:absolute; inset:0; width:100%; height:100%; border:0; border-radius:14px; background:#0d0f14}
+  .chart-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:14px;background:#0d0f14}
 
-  /* ---------- TWO-COL ---------- */
-  .two{max-width:980px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:16px}
+  /* ===== TWO-COL ===== */
+  .two{max-width:980px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:16px}
   @media (max-width:900px){.two{grid-template-columns:1fr}}
-
-  footer{padding:36px 0 60px; color:var(--muted); text-align:center; border-top:1px solid var(--stroke)}
+  footer{padding:40px 0 64px;color:var(--muted);text-align:center}
 </style>
 </head>
 <body>
-  <!-- gold edge glow -->
-  <div class="glow" aria-hidden="true"></div>
+  <!-- Gold side glow frames -->
+  <div class="edge left" aria-hidden="true"></div>
+  <div class="edge right" aria-hidden="true"></div>
 
   <!-- NAV -->
   <nav class="nav">
@@ -156,8 +153,19 @@
     </div>
   </nav>
 
+  <!-- Sticky investor CTA -->
+  <div class="cta">
+    <div class="wrap">
+      <div class="row">
+        <a class="btn jup"   target="_blank" rel="noopener" href="https://jup.ag/tokens/5hpVjhn7PdVTme9HxMSDyb37BAeeb3vurN3hhHeWmoon">Buy on Jupiter</a>
+        <a class="btn secondary" target="_blank" rel="noopener" href="https://dexscreener.com/solana/5QZHizqEkJcQYruJWfdSa9idYa2n6xQ3ttKvSZbPZxtL">Open on DexScreener</a>
+        <a class="btn moon"  target="_blank" rel="noopener" href="https://moonshot.com/5hpVjhn7PdVTme9HxMSDyb37BAeeb3vurN3hhHeWmoon?ref=zDxzbNkUqe">Buy on Moonshot</a>
+      </div>
+    </div>
+  </div>
+
   <!-- HERO -->
-  <header class="hero centered" role="img" aria-label="Edge-lit gold glow background">
+  <header class="hero centered" role="img" aria-label="Gold edge-glow background">
     <div class="wrap centered">
       <span class="badge">🏛 THE RETURN OF THE STANDARD</span>
       <h1>GoldX revives gold’s legacy for the digital era.</h1>
@@ -215,11 +223,6 @@
         src="https://dexscreener.com/solana/5QZHizqEkJcQYruJWfdSa9idYa2n6xQ3ttKvSZbPZxtL?embed=1&chartTheme=dark&theme=dark&interval=15"
         title="DexScreener GOLDX" loading="lazy" referrerpolicy="no-referrer">
       </iframe>
-    </div>
-    <div class="row" style="margin-top:12px">
-      <a class="btn" target="_blank" rel="noopener" href="https://jup.ag/tokens/5hpVjhn7PdVTme9HxMSDyb37BAeeb3vurN3hhHeWmoon">Buy on Jupiter</a>
-      <a class="btn secondary" target="_blank" rel="noopener" href="https://dexscreener.com/solana/5QZHizqEkJcQYruJWfdSa9idYa2n6xQ3ttKvSZbPZxtL">Open on DexScreener</a>
-      <a class="btn secondary" target="_blank" rel="noopener" href="https://moonshot.com/5hpVjhn7PdVTme9HxMSDyb37BAeeb3vurN3hhHeWmoon?ref=zDxzbNkUqe">Buy on Moonshot</a>
     </div>
   </section>
 
