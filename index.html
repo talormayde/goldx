@@ -6,8 +6,8 @@
 <title>GOLDX — The Digital Gold Mine</title>
 <meta name="description" content="Scarcity. Stability. Community. GOLDX revives gold’s legacy for the digital era.">
 
-<!-- Headline font: League Spartan (wide, premium-feel) -->
-<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700&display=swap" rel="stylesheet">
+<!-- Site font: Iceland (entire page) -->
+<link href="https://fonts.googleapis.com/css2?family=Iceland&display=swap" rel="stylesheet">
 
 <style>
   :root{
@@ -21,9 +21,9 @@
 
     /* Brand gradients */
     --jup-1:#00E59B; --jup-2:#00FFA3;            /* Jupiter */
-    --moon-1:#B14EFF; --moon-2:#FF6EC7;          /* Moonshot (kept for chart section) */
+    --moon-1:#B14EFF; --moon-2:#FF6EC7;          /* Moonshot */
 
-    /* New button gradients */
+    /* Button gradients */
     --x-from:#ffffff; --x-to:#000000;            /* X button */
     --tg-from:#29B6F6; --tg-to:#ffffff;          /* Telegram button */
     --dex-from:#D9D9D9; --dex-to:#8C8C8C;        /* DexScreener button */
@@ -42,9 +42,13 @@
     .chart-frame{ background:#F2F4F7; }
   }
 
+  /* prevent any horizontal jiggle */
+  html, body { overflow-x: hidden; }
+
   *{ box-sizing:border-box; margin:0; padding:0 }
   body{
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+    font-family: 'Iceland', sans-serif;   /* apply Iceland everywhere */
+    font-size:16px;                       /* body text = 16px */
     line-height:1.6;
     display:block;
     padding:24px 20px 64px;
@@ -58,6 +62,8 @@
       radial-gradient(80% 80% at 0% 50%, rgba(244,197,88,.30), transparent 60%),
       linear-gradient(90deg, rgba(244,197,88,.24), rgba(244,197,88,.08) 45%, transparent 100%);
     filter: blur(18px) saturate(1.05);
+    /* make sure the blur never creates scrollbars */
+    will-change: transform;
   }
 
   /* Right-aligned container */
@@ -65,12 +71,11 @@
 
   header{ padding-top:6px; padding-bottom:18px; }
   .logo{
-    height:200px; /* bigger logo per request */
+    height:200px; /* bigger logo as you set */
     width:auto; vertical-align:middle;
   }
 
   h1{
-    font-family:"League Spartan", sans-serif; /* heading font only */
     font-weight:700; letter-spacing:.01em;
     font-size: clamp(28px, 6.2vw, 56px);
     margin:14px 0 6px;
@@ -91,37 +96,18 @@
   .btn img{ height:14px; width:auto; display:block }
   .btn:hover{ opacity:1; transform:translateY(-1px) }
 
-  .btn-outline{
-    border-color: currentColor; background:transparent; color:inherit;
-  }
-  .btn-x{
-    background: linear-gradient(180deg, var(--x-from), var(--x-to));
-    color:#fff; border-color: rgba(0,0,0,.35);
-  }
-  .btn-tg{
-    background: linear-gradient(180deg, var(--tg-from), var(--tg-to));
-    color:#0a2330; border-color: rgba(41,182,246,.35);
-  }
-  .btn-dex{
-    background: linear-gradient(180deg, var(--dex-from), var(--dex-to));
-    color:#121212; border-color: rgba(160,160,160,.35);
-  }
-  .btn-jup{
-    background: linear-gradient(180deg, var(--jup-2), var(--jup-1));
-    color:#042018; border-color: rgba(0,229,155,.35);
-  }
-  .btn-moon{
-    background: linear-gradient(180deg, var(--moon-1), var(--moon-2));
-    color:#210425; border-color: rgba(177,78,255,.35);
-  }
+  .btn-outline{ border-color: currentColor; background:transparent; color:inherit; }
+  .btn-x{    background: linear-gradient(180deg, var(--x-from),  var(--x-to));  color:#fff;     border-color: rgba(0,0,0,.35); }
+  .btn-tg{   background: linear-gradient(180deg, var(--tg-from), var(--tg-to)); color:#0a2330;  border-color: rgba(41,182,246,.35); }
+  .btn-dex{  background: linear-gradient(180deg, var(--dex-from),var(--dex-to)); color:#121212; border-color: rgba(160,160,160,.35); }
+  .btn-jup{  background: linear-gradient(180deg, var(--jup-2),  var(--jup-1));  color:#042018;  border-color: rgba(0,229,155,.35); }
+  .btn-moon{ background: linear-gradient(180deg, var(--moon-1), var(--moon-2)); color:#210425;  border-color: rgba(177,78,255,.35); }
 
   section{ padding:36px 0; }
   .section-title{
-    font-family:"League Spartan", sans-serif;
     font-size:22px; letter-spacing:.01em; margin-bottom:10px;
   }
   .blurb{ margin: 0 0 16px 0; }
-
   .phase{ margin-bottom:10px; }
 
   .chart{ margin-top:8px; }
@@ -135,7 +121,8 @@
   }
   .copy-btn{
     display:inline-flex; align-items:center; justify-content:center;
-    width:22px; height:22px; cursor:pointer; opacity:.9; border:0; background:none;
+    width:22px; height:22px; cursor:pointer; opacity:.95; border:0; background:none;
+    color: var(--gold); /* make the overlapping squares gold */
   }
   .copy-btn:hover{ opacity:1 }
   #copied{ margin-left:6px; }
@@ -151,7 +138,7 @@
 
   <!-- Right-aligned container -->
   <div class="wrap">
-    <!-- Top: GOLDX logo (bigger) -->
+    <!-- Top: GOLDX logo -->
     <header>
       <img src="GOLDX_ICON.png" class="logo" alt="GOLDX">
     </header>
@@ -163,24 +150,14 @@
 
       <div class="row">
         <!-- X with brand gradient -->
-        <a class="btn btn-x" href="https://x.com/GoldExchangeCoi" target="_blank" rel="noopener" title="X">
-          X
-        </a>
+        <a class="btn btn-x" href="https://x.com/GoldExchangeCoi" target="_blank" rel="noopener" title="X">X</a>
         <!-- Telegram with brand gradient -->
-        <a class="btn btn-tg" href="https://t.me/GoldXcoinMoon" target="_blank" rel="noopener" title="Telegram">
-          TG
-        </a>
+        <a class="btn btn-tg" href="https://t.me/GoldXcoinMoon" target="_blank" rel="noopener" title="Telegram">TG</a>
         <!-- DexScreener silver→gray -->
-        <a class="btn btn-dex" href="https://dexscreener.com/solana/5QZHizqEkJcQYruJWfdSa9idYa2n6xQ3ttKvSZbPZxtL" target="_blank" rel="noopener" title="DexScreener">
-          DEX
-        </a>
-        <!-- Jupiter / Moonshot (kept, small gradient -->
-        <a class="btn btn-jup" href="https://jup.ag/tokens/5hpVjhn7PdVTme9HxMSDyb37BAeeb3vurN3hhHeWmoon" target="_blank" rel="noopener" title="Jupiter">
-          Jupiter
-        </a>
-        <a class="btn btn-moon" href="https://moonshot.com/5hpVjhn7PdVTme9HxMSDyb37BAeeb3vurN3hhHeWmoon?ref=zDxzbNkUqe" target="_blank" rel="noopener" title="Moonshot">
-          Moonshot
-        </a>
+        <a class="btn btn-dex" href="https://dexscreener.com/solana/5QZHizqEkJcQYruJWfdSa9idYa2n6xQ3ttKvSZbPZxtL" target="_blank" rel="noopener" title="DexScreener">DEX</a>
+        <!-- Jupiter / Moonshot -->
+        <a class="btn btn-jup"  href="https://jup.ag/tokens/5hpVjhn7PdVTme9HxMSDyb37BAeeb3vurN3hhHeWmoon" target="_blank" rel="noopener" title="Jupiter">Jupiter</a>
+        <a class="btn btn-moon" href="https://moonshot.com/5hpVjhn7PdVTme9HxMSDyb37BAeeb3vurN3hhHeWmoon?ref=zDxzbNkUqe" target="_blank" rel="noopener" title="Moonshot">Moonshot</a>
       </div>
 
       <!-- Contract (click icon to copy) -->
@@ -188,10 +165,10 @@
         <span class="muted">Contract:</span>
         <span id="caText">5QZHizqEkJcQYruJWfdSa9idYa2n6xQ3ttKvSZbPZxtL</span>
         <button id="copyBtn" class="copy-btn" aria-label="Copy contract">
-          <!-- overlapping squares icon -->
+          <!-- overlapping squares icon (now gold via currentColor) -->
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <rect x="7" y="7" width="10" height="10" rx="2" opacity="0.95"></rect>
-            <rect x="3" y="3" width="10" height="10" rx="2" opacity="0.7"></rect>
+            <rect x="7" y="7" width="10" height="10" rx="2" opacity="1"></rect>
+            <rect x="3" y="3" width="10" height="10" rx="2" opacity="0.75"></rect>
           </svg>
         </button>
         <span id="copied" class="muted" style="display:none;">Copied</span>
