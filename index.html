@@ -3,75 +3,66 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GOLDX — The Return of The Standard</title>
+<title>GOLDX — The Return of The GoldX Standard</title>
 <meta name="description" content="GOLDX revives gold’s legacy for the digital era. Scarcity. Stability. Community. #TheGoldXStandard">
 <meta name="theme-color" content="#0b0b0d">
-<meta property="og:title" content="GOLDX — The Return of The Standard">
-<meta property="og:description" content="Digital Gold Mine — Scarcity. Stability. Community. #TheGoldXStandard">
-<meta property="og:image" content="GOLDX_og.png">
-<meta name="twitter:card" content="summary_large_image">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --maxw:1120px;
     --bg:#0b0b0d;
-    --bg-soft:#0f1116;
-    --card:#0f1218;
-    --line:#1a1e2a;
-    --gold:#f4ca58;
-    --gold2:#e2b646;
     --text:#f6f7fb;
     --muted:#a9afbf;
-    --ring:0 0 0 2px rgba(244,202,88,.25)
+    --gold:#f4ca58;
+    --gold2:#e2b646;
   }
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
-    margin:0;color:var(--text);
-    background:var(--bg);
-    font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif; line-height:1.6;
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
   }
+  a{color:var(--gold);text-decoration:none} a:hover{text-decoration:underline}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
-  a{color:var(--gold);text-decoration:none}
-  a:hover{text-decoration:underline}
+  .centered{max-width:980px;margin-inline:auto;text-align:center}
+
   /* NAV */
-  .nav{position:sticky;top:0;z-index:40;background:rgba(11,11,13,.7);backdrop-filter:blur(10px);border-bottom:1px solid #151923}
+  .nav{position:sticky;top:0;z-index:40;background:rgba(11,11,13,.55);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.06)}
   .nav .inner{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
   .brand{display:flex;align-items:center;gap:12px}
   .brand img{width:32px;height:32px;border-radius:8px}
   .brand-name{font-family:Cinzel,serif;font-weight:700;letter-spacing:.03em}
   .actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
   .btn{
-    display:inline-flex;align-items:center;gap:8px;justify-content:center;
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
     background:linear-gradient(180deg,var(--gold),var(--gold2));color:#1b1404;
     border:0;border-radius:12px;padding:10px 14px;font-weight:800;
     box-shadow:0 10px 30px rgba(244,202,88,.25)
   }
-  .btn.secondary{background:#151923;color:var(--text);border:1px solid #1f2433;box-shadow:none}
+  .btn.secondary{background:rgba(20,24,36,.6);color:var(--text);border:1px solid rgba(255,255,255,.08)}
   .btn:active{transform:translateY(1px)}
-  /* HERO */
+
+  /* HERO (uses CSS var for iOS-safe background) */
   .hero{
-    position:relative;min-height:76svh;display:grid;place-items:center;
-    text-align:center;overflow:hidden;
-    background:#0a0a0c url('mine_bg.PNG') center/cover no-repeat fixed;
+    position:relative;min-height:76svh;display:grid;place-items:center;text-align:center;overflow:hidden;
+    background:#0a0a0c;
   }
-  /* dark overlay + warm vignette */
   .hero::before{
+    content:"";position:absolute;inset:0;
+    background-image:var(--hero,url('mine_bg.PNG'));
+    background-size:cover;background-position:center;background-repeat:no-repeat;
+    transform:scale(1.02);filter:saturate(1.05);z-index:0;
+  }
+  .hero::after{
+    /* warm vignette & glow */
     content:"";position:absolute;inset:0;
     background:
       radial-gradient(900px 420px at 50% -10%, rgba(244,202,88,.10), transparent 60%),
-      linear-gradient(180deg, rgba(0,0,0,.65) 0%, rgba(0,0,0,.35) 40%, rgba(0,0,0,.55) 100%);
-    pointer-events:none;
+      linear-gradient(180deg, rgba(0,0,0,.65) 0%, rgba(0,0,0,.4) 45%, rgba(0,0,0,.55) 100%);
+    z-index:1;
   }
-  /* giant subtle X watermark */
-  .hero::after{
-    content:"X";position:absolute;inset:0;display:grid;place-items:center;
-    font-family:Cinzel,serif;font-weight:700;font-size:min(30vw,300px);
-    color:#f4ca58;opacity:.06;letter-spacing:.05em;pointer-events:none;
-  }
-  .hero > .wrap{position:relative;z-index:1}
+  .hero > .wrap{position:relative;z-index:2}
   .badge{
     display:inline-flex;gap:8px;align-items:center;
     background:linear-gradient(180deg,#ffecb3,#f4ca58);color:#2b2205;
@@ -81,35 +72,51 @@
   .lead{font-size:clamp(16px,2.6vw,20px);color:var(--muted);max-width:900px;margin:0 auto}
   .row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:18px}
   .copy{
-    display:inline-flex;align-items:center;gap:8px;justify-content:center;
-    border:1px solid #232838;border-radius:12px;padding:10px 14px;background:#141a26;cursor:pointer
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:10px 14px;
+    background:rgba(20,26,38,.55);backdrop-filter:blur(6px);cursor:pointer
   }
-  .copy:focus{outline:none;box-shadow:var(--ring)}
   .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:760px;margin:18px auto 0}
-  .kpi{background:#0f1219;border:1px solid #1b2130;border-radius:12px;padding:12px;text-align:center}
+  .kpi{
+    background:rgba(15,18,24,.58);backdrop-filter:blur(6px);
+    border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:12px;text-align:center
+  }
   .kpi strong{display:block;font-size:18px}
-  /* SECTIONS */
-  section{padding:58px 0;border-top:1px solid #141823}
+
+  /* SECTIONS (glass cards, centered) */
+  section{padding:58px 0;border-top:1px solid rgba(255,255,255,.06)}
   h2{font-family:Cinzel,serif;font-size:28px;margin:0 0 12px;text-align:center}
   .muted{text-align:center;color:var(--muted);max-width:820px;margin:0 auto 18px}
+
   .features{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:980px;margin:0 auto}
   @media (max-width:980px){.features{grid-template-columns:1fr 1fr}}
   @media (max-width:520px){.features{grid-template-columns:1fr}}
-  .feature{background:var(--card);border:1px solid #20263a;border-radius:14px;padding:16px;text-align:center}
+  .feature{
+    background:rgba(15,18,24,.58);backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:16px;text-align:center
+  }
   .feature em{font-style:normal;color:var(--gold);font-weight:800}
+
   .steps{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:980px;margin:0 auto}
   @media (max-width:900px){.steps{grid-template-columns:1fr}}
-  .step{background:var(--card);border:1px solid #1b2030;border-radius:14px;padding:18px;text-align:center;position:relative}
+  .step{
+    background:rgba(15,18,24,.58);backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:18px;text-align:center;position:relative
+  }
   .tag{position:absolute;right:12px;top:12px;background:#182011;border:1px solid #25351a;color:#a7f084;padding:3px 8px;border-radius:999px;font-size:12px;font-weight:800}
-  /* Chart embed */
+
   .chart-wrap{position:relative;width:100%;max-width:980px;margin:0 auto;padding-bottom:130%}
   @media(min-width:1200px){.chart-wrap{padding-bottom:62%}}
   .chart-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:14px;background:#0d0f14}
-  /* GRID blocks under sections */
+
   .two{max-width:980px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:16px}
   @media (max-width:900px){.two{grid-template-columns:1fr}}
-  .card{background:linear-gradient(180deg,var(--card),#0d1016);border:1px solid #1a2030;border-radius:16px;padding:18px;box-shadow:0 10px 28px rgba(0,0,0,.28);text-align:center}
-  footer{padding:36px 0 60px;color:var(--muted);text-align:center;border-top:1px solid #141823}
+  .card{
+    background:rgba(15,18,24,.58);backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:18px;text-align:center
+  }
+
+  footer{padding:36px 0 60px;color:var(--muted);text-align:center;border-top:1px solid rgba(255,255,255,.06)}
 </style>
 </head>
 <body>
@@ -129,8 +136,8 @@
   </nav>
 
   <!-- HERO -->
-  <header class="hero" role="img" aria-label="Underground gold mine tunnel with rails and warm light">
-    <div class="wrap" style="max-width:980px">
+  <header class="hero centered" style="--hero:url('mine_bg.PNG')" role="img" aria-label="Underground gold mine tunnel with rails and warm light">
+    <div class="wrap centered">
       <span class="badge">🏛 THE RETURN OF THE STANDARD</span>
       <h1>GoldX revives gold’s legacy for the digital era.</h1>
       <p class="lead">Gold has represented <strong>value, wealth, and trust</strong> for millennia. GOLDX brings that standard to crypto — built on <strong>Scarcity</strong>, <strong>Stability</strong>, and <strong>Community</strong>.</p>
@@ -149,7 +156,7 @@
   <!-- WHY -->
   <section id="why">
     <h2>Why GOLDX?</h2>
-    <p class="muted">The Digital Gold Mine — clear principles that compound trust.</p>
+    <p class="muted centered">The Digital Gold Mine — clear principles that compound trust.</p>
     <div class="features">
       <div class="feature">🔥<br><em>Burns → Scarcity</em><br><span class="muted">Supply compression over time.</span></div>
       <div class="feature">💧<br><em>Liquidity Lock → Stability</em><br><span class="muted">Confidence for new buyers.</span></div>
@@ -161,7 +168,7 @@
   <!-- MINE MAP -->
   <section id="mine-map">
     <h2>⚒️ The GoldX Mine Map</h2>
-    <p class="muted">Built step by step — no hype, just progress.</p>
+    <p class="muted centered">Built step by step — no hype, just progress.</p>
     <div class="steps">
       <div class="step">
         <div class="tag">LIVE</div>
@@ -186,13 +193,11 @@
   <!-- CHART -->
   <section id="chart">
     <h2>📈 Chart & Swap</h2>
-    <p class="muted">Not financial advice. Trade responsibly.</p>
+    <p class="muted centered">Not financial advice. Trade responsibly.</p>
     <div class="chart-wrap">
       <iframe
         src="https://dexscreener.com/solana/5QZHizqEkJcQYruJWfdSa9idYa2n6xQ3ttKvSZbPZxtL?embed=1&chartTheme=dark&theme=dark&interval=15"
-        title="DexScreener GOLDX"
-        loading="lazy"
-        referrerpolicy="no-referrer">
+        title="DexScreener GOLDX" loading="lazy" referrerpolicy="no-referrer">
       </iframe>
     </div>
     <div class="row" style="margin-top:12px">
