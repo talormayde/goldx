@@ -6,23 +6,27 @@
 <title>GOLDX — The Digital Gold Mine</title>
 <meta name="description" content="Scarcity. Stability. Community. GOLDX revives gold’s legacy for the digital era.">
 
-<!-- Fonts: Owners Wide (fallbacks) + monospace body -->
+<!-- Headline font: League Spartan (wide, premium-feel) -->
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@600;700&display=swap" rel="stylesheet">
+
 <style>
-  @font-face{
-    font-family:"Owners Wide";
-    src: local("Owners Wide"); /* if installed; otherwise fallback below */
-    font-weight:700; font-style:normal;
-  }
   :root{
     --gold:#F4C558;
+
     --text-dark:#0C0D10; --text-light:#F7F7FA;
     --muted-dark:#565B66; --muted-light:#A0A6B4;
     --line-dark:#1A1D24; --line-light:#E6E7EB;
+
     --max: 760px;
 
     /* Brand gradients */
-    --jup-1:#00E59B; --jup-2:#00FFA3;         /* Jupiter */
-    --moon-1:#B14EFF; --moon-2:#FF6EC7;      /* Moonshot */
+    --jup-1:#00E59B; --jup-2:#00FFA3;            /* Jupiter */
+    --moon-1:#B14EFF; --moon-2:#FF6EC7;          /* Moonshot (kept for chart section) */
+
+    /* New button gradients */
+    --x-from:#ffffff; --x-to:#000000;            /* X button */
+    --tg-from:#29B6F6; --tg-to:#ffffff;          /* Telegram button */
+    --dex-from:#D9D9D9; --dex-to:#8C8C8C;        /* DexScreener button */
   }
 
   @media (prefers-color-scheme: dark){
@@ -42,49 +46,65 @@
   body{
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
     line-height:1.6;
-    /* Right-aligned layout */
     display:block;
     padding:24px 20px 64px;
     position:relative;
   }
 
-  /* LEFT GOLD GLOW (full height, soft leak) */
+  /* LEFT GOLD GLOW */
   .left-glow{
-    position:fixed; inset:0 auto 0 0; width:min(24vw, 300px); pointer-events:none; z-index:0;
+    position:fixed; inset:0 auto 0 0; width:min(26vw, 320px); pointer-events:none; z-index:0;
     background:
-      radial-gradient(80% 80% at 0% 50%, rgba(244,197,88,.28), transparent 60%),
-      linear-gradient(90deg, rgba(244,197,88,.22), rgba(244,197,88,.06) 50%, transparent 100%);
+      radial-gradient(80% 80% at 0% 50%, rgba(244,197,88,.30), transparent 60%),
+      linear-gradient(90deg, rgba(244,197,88,.24), rgba(244,197,88,.08) 45%, transparent 100%);
     filter: blur(18px) saturate(1.05);
   }
 
-  /* Container aligned to the right */
+  /* Right-aligned container */
   .wrap{ max-width:var(--max); margin-left:auto; position:relative; z-index:1; text-align:right; }
 
-  header{ padding-top:6px; padding-bottom:24px; }
-  .logo{ height:28px; width:auto; vertical-align:middle; }
+  header{ padding-top:6px; padding-bottom:18px; }
+  .logo{
+    height:82px; /* bigger logo per request */
+    width:auto; vertical-align:middle;
+  }
 
   h1{
-    font-family: "Owners Wide", ui-sans-serif, system-ui, sans-serif;
-    font-weight:700; letter-spacing:.02em;
-    font-size: clamp(28px, 6.5vw, 56px);
+    font-family:"League Spartan", sans-serif; /* heading font only */
+    font-weight:700; letter-spacing:.01em;
+    font-size: clamp(28px, 6.2vw, 56px);
     margin:14px 0 6px;
   }
   .lead{ font-size:16px; }
   .muted{ font-size:14px; opacity:.9; }
 
-  .row{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; margin-top:22px; }
+  .row{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; margin-top:18px; }
 
-  /* Buttons (small, soft, two-tone) */
+  /* Small buttons with soft opacity and brand gradients */
   .btn{
     display:inline-flex; align-items:center; justify-content:center;
-    gap:8px; padding:8px 12px; border-radius:8px;
+    gap:8px; padding:6px 10px; border-radius:8px;
     font-weight:600; text-decoration:none; border:1px solid transparent;
     opacity:.92; transition:opacity .15s ease, transform .15s ease;
-    font-size:14px;
+    font-size:13px; min-height:28px;
   }
+  .btn img{ height:14px; width:auto; display:block }
   .btn:hover{ opacity:1; transform:translateY(-1px) }
+
   .btn-outline{
-    border-color: currentColor; background:transparent;
+    border-color: currentColor; background:transparent; color:inherit;
+  }
+  .btn-x{
+    background: linear-gradient(180deg, var(--x-from), var(--x-to));
+    color:#fff; border-color: rgba(0,0,0,.35);
+  }
+  .btn-tg{
+    background: linear-gradient(180deg, var(--tg-from), var(--tg-to));
+    color:#0a2330; border-color: rgba(41,182,246,.35);
+  }
+  .btn-dex{
+    background: linear-gradient(180deg, var(--dex-from), var(--dex-to));
+    color:#121212; border-color: rgba(160,160,160,.35);
   }
   .btn-jup{
     background: linear-gradient(180deg, var(--jup-2), var(--jup-1));
@@ -95,44 +115,33 @@
     color:#210425; border-color: rgba(177,78,255,.35);
   }
 
-  /* Sections */
-  section{ padding:38px 0; }
+  section{ padding:36px 0; }
   .section-title{
-    font-family:"Owners Wide", ui-sans-serif, system-ui, sans-serif;
-    font-size:22px; letter-spacing:.02em; margin-bottom:10px;
+    font-family:"League Spartan", sans-serif;
+    font-size:22px; letter-spacing:.01em; margin-bottom:10px;
   }
-  .blurb{ margin: 0 0 18px 0; }
+  .blurb{ margin: 0 0 16px 0; }
 
-  /* Mine Map (simple list, right-aligned) */
-  .phase{ margin-bottom:12px; }
+  .phase{ margin-bottom:10px; }
 
-  /* Chart */
-  .chart{
-    margin-top:8px;
-  }
+  .chart{ margin-top:8px; }
   .chart-frame{
     border-radius:10px; overflow:hidden; width:100%; height:420px; border:0;
   }
 
   /* Contract copy (icon only) */
   .contract{
-    display:inline-flex; align-items:center; gap:10px; font-size:14px; margin-top:14px;
+    display:inline-flex; align-items:center; gap:10px; font-size:14px; margin-top:12px;
   }
-  .copy-icon{
-    display:inline-block; width:18px; height:18px; cursor:pointer; opacity:.9;
-    background:
-      linear-gradient(#0000,#0000) padding-box,
-      conic-gradient(from 90deg, currentColor 0 25%, #0000 0 100%) border-box;
-  }
-  /* Simple two-box icon via SVG */
   .copy-btn{
     display:inline-flex; align-items:center; justify-content:center;
     width:22px; height:22px; cursor:pointer; opacity:.9; border:0; background:none;
   }
   .copy-btn:hover{ opacity:1 }
+  #copied{ margin-left:6px; }
 
-  footer{ margin-top:42px; font-size:13px; opacity:.9; }
-  .line{ border-top:1px solid; margin:28px 0 18px; }
+  footer{ margin-top:36px; font-size:13px; opacity:.9; }
+  .line{ border-top:1px solid; margin:22px 0 16px; }
 </style>
 </head>
 <body>
@@ -142,9 +151,9 @@
 
   <!-- Right-aligned container -->
   <div class="wrap">
-    <!-- Top: GOLDX logo -->
+    <!-- Top: GOLDX logo (bigger) -->
     <header>
-      <img src="GOLDX_ICON.png" class="logo" alt="GOLDX">
+      <img src="GOLD_ICON.png" class="logo" alt="GOLDX">
     </header>
 
     <!-- Hero -->
@@ -153,10 +162,25 @@
       <p class="lead muted">Scarcity. Stability. Community.</p>
 
       <div class="row">
-        <a class="btn btn-outline" href="https://x.com/GoldExchangeCoi" target="_blank" rel="noopener">X</a>
-        <a class="btn btn-outline" href="https://t.me/GoldXcoinMoon" target="_blank" rel="noopener">Telegram</a>
-        <a class="btn btn-jup" href="https://jup.ag/tokens/5hpVjhn7PdVTme9HxMSDyb37BAeeb3vurN3hhHeWmoon" target="_blank" rel="noopener">Jupiter</a>
-        <a class="btn btn-moon" href="https://moonshot.com/5hpVjhn7PdVTme9HxMSDyb37BAeeb3vurN3hhHeWmoon?ref=zDxzbNkUqe" target="_blank" rel="noopener">Moonshot</a>
+        <!-- X with brand gradient + image -->
+        <a class="btn btn-x" href="https://x.com/GoldExchangeCoi" target="_blank" rel="noopener" title="X">
+          <img src="x_logo.png" alt="">
+        </a>
+        <!-- Telegram with brand gradient + image -->
+        <a class="btn btn-tg" href="https://t.me/GoldXcoinMoon" target="_blank" rel="noopener" title="Telegram">
+          <img src="tg_logo.png" alt="">
+        </a>
+        <!-- DexScreener silver→gray -->
+        <a class="btn btn-dex" href="https://dexscreener.com/solana/5QZHizqEkJcQYruJWfdSa9idYa2n6xQ3ttKvSZbPZxtL" target="_blank" rel="noopener" title="DexScreener">
+          Dex
+        </a>
+        <!-- Jupiter / Moonshot (kept, small gradient, no 'Buy' word) -->
+        <a class="btn btn-jup" href="https://jup.ag/tokens/5hpVjhn7PdVTme9HxMSDyb37BAeeb3vurN3hhHeWmoon" target="_blank" rel="noopener" title="Jupiter">
+          Jupiter
+        </a>
+        <a class="btn btn-moon" href="https://moonshot.com/5hpVjhn7PdVTme9HxMSDyb37BAeeb3vurN3hhHeWmoon?ref=zDxzbNkUqe" target="_blank" rel="noopener" title="Moonshot">
+          Moonshot
+        </a>
       </div>
 
       <!-- Contract (click icon to copy) -->
@@ -164,10 +188,10 @@
         <span class="muted">Contract:</span>
         <span id="caText">5QZHizqEkJcQYruJWfdSa9idYa2n6xQ3ttKvSZbPZxtL</span>
         <button id="copyBtn" class="copy-btn" aria-label="Copy contract">
-          <!-- two overlapping boxes icon -->
+          <!-- overlapping squares icon -->
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <rect x="7" y="7" width="10" height="10" rx="2" opacity="0.9"></rect>
-            <rect x="3" y="3" width="10" height="10" rx="2" opacity="0.6"></rect>
+            <rect x="7" y="7" width="10" height="10" rx="2" opacity="0.95"></rect>
+            <rect x="3" y="3" width="10" height="10" rx="2" opacity="0.7"></rect>
           </svg>
         </button>
         <span id="copied" class="muted" style="display:none;">Copied</span>
@@ -198,15 +222,8 @@
         <iframe
           class="chart-frame"
           src="https://dexscreener.com/solana/5QZHizqEkJcQYruJWfdSa9idYa2n6xQ3ttKvSZbPZxtL?embed=1&chartTheme=dark&theme=dark&interval=15"
-          title="DexScreener GOLDX"
-          loading="lazy"
-          referrerpolicy="no-referrer">
+          title="DexScreener GOLDX" loading="lazy" referrerpolicy="no-referrer">
         </iframe>
-        <div class="row" style="margin-top:12px">
-          <a class="btn btn-jup"  href="https://jup.ag/tokens/5hpVjhn7PdVTme9HxMSDyb37BAeeb3vurN3hhHeWmoon" target="_blank" rel="noopener">Jupiter</a>
-          <a class="btn btn-moon" href="https://moonshot.com/5hpVjhn7PdVTme9HxMSDyb37BAeeb3vurN3hhHeWmoon?ref=zDxzbNkUqe" target="_blank" rel="noopener">Moonshot</a>
-          <a class="btn btn-outline" href="https://dexscreener.com/solana/5QZHizqEkJcQYruJWfdSa9idYa2n6xQ3ttKvSZbPZxtL" target="_blank" rel="noopener">DexScreener</a>
-        </div>
       </section>
 
       <div class="line"></div>
