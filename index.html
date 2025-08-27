@@ -10,7 +10,7 @@
 <meta property="og:title" content="GOLDX — The Digital Gold Mine">
 <meta property="og:description" content="Scarcity. Stability. Community. #TheGoldXStandard">
 <meta property="og:type" content="website">
-<meta property="og:image" content="GOLDX_og.png">   <!-- place this file in the repo root -->
+<meta property="og:image" content="GOLDX_og.png"><!-- 1920x1005 -->
 <meta property="og:image:width" content="1920">
 <meta property="og:image:height" content="1005">
 <meta name="twitter:card" content="summary_large_image">
@@ -26,10 +26,6 @@
     --muted-dark:#565B66; --muted-light:#A0A6B4;
 
     --max: 760px;
-
-    /* Brand gradients */
-    --jup-1:#00E59B; --jup-2:#00FFA3;
-    --moon-1:#B14EFF; --moon-2:#FF6EC7;
 
     /* Button gradients (variables) */
     --x-grad:  linear-gradient(180deg, #F4C558, #2b2b2b, #000000);
@@ -50,15 +46,13 @@
     .chart-frame{ background:#F2F4F7; }
   }
 
-  /* prevent any horizontal jiggle */
   html, body { overflow-x: hidden; }
-
   *{ box-sizing:border-box; margin:0; padding:0 }
+
   body{
     font-family: 'Iceland', sans-serif;
     font-size:18px;
     line-height:1.6;
-    display:block;
     padding:24px 20px 64px;
     position:relative;
   }
@@ -78,30 +72,25 @@
   header{ padding-top:6px; padding-bottom:18px; padding-right:18px }
   .logo{ height:300px; width:auto; vertical-align:middle; }
 
-  h1{
-    font-weight:700; letter-spacing:.01em;
-    font-size: clamp(34px, 6.2vw, 56px);
-    margin:14px 0 6px;
-  }
+  h1{ font-weight:700; letter-spacing:.01em; font-size: clamp(34px, 6.2vw, 56px); margin:14px 0 6px; }
   .lead{ font-size:18px; }
   .muted{ font-size:16px; opacity:.9; }
 
   .row{ display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; margin-top:18px; }
 
-  /* Buttons */
   .btn{
     display:inline-flex; align-items:center; justify-content:center;
     gap:8px; padding:6px 10px; border-radius:8px;
-    font-weight:400; text-decoration:none; border:0px solid transparent;
-    opacity:.92; transition:opacity .15s ease, transform .15s ease;
+    font-weight:400; text-decoration:none; border:0; opacity:.92;
+    transition:opacity .15s ease, transform .15s ease;
     font-size:13px; min-height:28px;
   }
   .btn:hover{ opacity:1; transform:translateY(-1px) }
-  .btn-x   { background: var(--x-grad);  color:#fff; }
-  .btn-tg  { background: var(--tg-grad); color:#E0F7FA; }
-  .btn-dex { background: linear-gradient(180deg, var(--dex-from),var(--dex-to)); color:#121212; }
-  .btn-jup { background: linear-gradient(180deg, var(--jup-2),  var(--jup-1));  color:#042018; }
-  .btn-moon{ background: linear-gradient(180deg, var(--moon-1), var(--moon-2)); color:#210425; }
+  .btn-x  { background: var(--x-grad);  color:#fff; }
+  .btn-tg { background: var(--tg-grad); color:#E0F7FA; }
+  .btn-dex{ background: linear-gradient(180deg, var(--dex-from),var(--dex-to)); color:#121212; }
+  .btn-jup{ background: linear-gradient(180deg, #00FFA3, #00E59B); color:#042018; }
+  .btn-moon{background: linear-gradient(180deg, #B14EFF, #FF6EC7); color:#210425; }
 
   section{ padding:36px 0; }
   .section-title{ font-size:22px; letter-spacing:.01em; margin-bottom:10px; }
@@ -111,7 +100,7 @@
   .chart{ margin-top:8px; overscroll-behavior: contain; }
   .chart-frame{
     border-radius:10px; overflow:hidden; width:100%; height:60vh; min-height:480px; max-height:80vh; border:0;
-    touch-action: none; -ms-touch-action: none;   /* help gestures on mobile */
+    touch-action: none; -ms-touch-action: none;
   }
   @media (max-width: 600px){
     .chart-frame{ height:50vh; min-height:380px; }
@@ -120,28 +109,34 @@
     .chart-frame{ height:65vh; }
   }
 
-  /* Contract copy (icon only) */
+  /* Contract copy */
   .contract{
-    display:inline-flex; align-items:center; gap:10px; font-size:14px; margin-top:12px;
+    display:inline-flex; align-items:center; gap:12px; font-size:14px; margin-top:14px;
   }
-  .contract #caText{ cursor:pointer; }
+  #caText{
+    cursor:pointer; user-select: text; -webkit-user-select:text; /* make it select-friendly on iOS */
+    padding:6px 8px; border-radius:6px;
+  }
   .copy-btn{
     display:inline-flex; align-items:center; justify-content:center;
-    width:22px; height:22px; cursor:pointer; opacity:.95; border:0; background:none;
+    width:28px; height:28px; cursor:pointer; opacity:.95; border:0; background:none;
     color: var(--gold);
   }
   .copy-btn:hover{ opacity:1 }
-  #copied{ margin-left:6px; }
+
+  /* tiny toast */
+  .toast{
+    position: fixed; right:16px; bottom:16px; z-index:9999;
+    background: rgba(20,20,20,.9); color:#fff; border:1px solid rgba(255,255,255,.12);
+    padding:8px 12px; border-radius:8px; font-size:14px; display:none;
+  }
 </style>
 </head>
 <body>
 
-  <!-- Left gold glow -->
   <div class="left-glow" aria-hidden="true"></div>
 
-  <!-- Right-aligned container -->
   <div class="wrap">
-    <!-- Top: GOLDX logo -->
     <header>
       <img src="GOLDX_ICON.png" class="logo" alt="GOLDX">
     </header>
@@ -168,7 +163,6 @@
             <rect x="3" y="3" width="10" height="10" rx="2" opacity="0.75"></rect>
           </svg>
         </button>
-        <span id="copied" class="muted" style="display:none;">Copied</span>
       </div>
 
       <!-- About -->
@@ -198,7 +192,9 @@
           <iframe
             class="chart-frame"
             src="https://dexscreener.com/solana/5QZHizqEkJcQYruJWfdSa9idYa2n6xQ3ttKvSZbPZxtL?embed=1&chartTheme=dark&theme=dark&interval=15"
-            title="DexScreener GOLDX" loading="lazy" referrerpolicy="no-referrer"
+            title="DexScreener GOLDX"
+            loading="lazy"
+            referrerpolicy="no-referrer"
             sandbox="allow-scripts allow-same-origin allow-popups">
           </iframe>
         </div>
@@ -210,52 +206,58 @@
     </main>
   </div>
 
-<script>
-  // Copy-to-clipboard: works on Safari/desktop; click icon OR address
-  (function(){
-    const btn = document.getElementById('copyBtn');
-    const textEl = document.getElementById('caText');
-    const note = document.getElementById('copied');
+<!-- tiny toast -->
+<div id="toast" class="toast">Copied</div>
 
-    async function copy(val){
-      try {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          await navigator.clipboard.writeText(val);
-        } else {
-          // Fallback for older Safari
-          const ta = document.createElement('textarea');
-          ta.value = val; ta.setAttribute('readonly','');
-          ta.style.position='absolute'; ta.style.left='-9999px';
-          document.body.appendChild(ta); ta.select();
-          document.execCommand('copy'); document.body.removeChild(ta);
-        }
-        note.style.display = 'inline';
-        setTimeout(()=> note.style.display = 'none', 1200);
-      } catch(e){}
+<script>
+  // Robust copy: works on Safari/older iOS, with visual toast
+  (function(){
+    const copyBtn = document.getElementById('copyBtn');
+    const addrEl  = document.getElementById('caText');
+    const toast   = document.getElementById('toast');
+    const value   = () => addrEl.textContent.trim();
+
+    function showToast(msg){
+      toast.textContent = msg || 'Copied';
+      toast.style.display = 'block';
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(()=> toast.style.display = 'none', 1200);
     }
 
-    btn.addEventListener('click',  ()=> copy(textEl.textContent.trim()));
-    textEl.addEventListener('click',()=> copy(textEl.textContent.trim()));
-  })();
+    async function copyText(text){
+      try{
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(text);
+          showToast('Copied');
+          return true;
+        }
+      }catch(e){}
+      try{
+        // Fallback for older Safari
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly','');
+        ta.style.position='fixed'; ta.style.top='-9999px';
+        document.body.appendChild(ta);
+        ta.focus(); ta.select();
+        const ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        if(ok){ showToast('Copied'); return true; }
+      }catch(e){}
+      // Last resort: select text and instruct
+      const range = document.createRange();
+      range.selectNodeContents(addrEl);
+      const sel = window.getSelection();
+      sel.removeAllRanges(); sel.addRange(range);
+      showToast('Press & hold → Copy');
+      return false;
+    }
 
-  // (Optional) If chart dragging still scrolls the page on iOS,
-  // uncomment the hard lock below to freeze page while touching the chart:
-  /*
-  (function(){
-    const wrap = document.getElementById('chartWrap');
-    if (!wrap) return;
-    let locked = false, y = 0;
-    function lock(){ if(locked)return; locked = true; y = window.scrollY; document.body.style.position='fixed'; document.body.style.top=`-${y}px`; }
-    function unlock(){ if(!locked)return; locked=false; document.body.style.position=''; document.body.style.top=''; window.scrollTo(0,y); }
-    wrap.addEventListener('touchstart', lock, {passive:false});
-    wrap.addEventListener('touchend', unlock);
-    wrap.addEventListener('touchcancel', unlock);
-    wrap.addEventListener('pointerdown', lock);
-    wrap.addEventListener('pointerup', unlock);
-    wrap.addEventListener('pointercancel', unlock);
-    wrap.addEventListener('mouseleave', unlock);
+    function handleCopy(){ copyText(value()); }
+
+    copyBtn.addEventListener('click', handleCopy);
+    addrEl.addEventListener('click', handleCopy);
   })();
-  */
 </script>
 </body>
 </html>
